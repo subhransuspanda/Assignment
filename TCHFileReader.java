@@ -12,7 +12,7 @@ public class TCHFileReader {
 	
 	private static final String FILE_NAME="resources\\data.csv";
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 		List<BankModel> list = readCSVFile(FILE_NAME);
 		queryData(list);
 	}
@@ -40,8 +40,11 @@ public class TCHFileReader {
 		return list;
 	}
 	
-	public static void queryData(List<BankModel> list) {
-		Scanner in = new Scanner(System.in);
+	public static void queryData(List<BankModel> list) throws Exception {
+		Scanner in = null;
+		try {
+		in = new Scanner(System.in);
+	
 		while(true) {
 			System.out.println("\nSearch criteria options :: id(1) \tBankName(2) \tType(3) \tCity(4) \tState(5) \tZip(6) \tCity and State(7) \tExit(any other key):");
 			int option = in.nextInt();
@@ -86,6 +89,12 @@ public class TCHFileReader {
 			else {
 				break;
 			}
+		}
+		}catch(Exception e) {
+			System.out.println("Error in operation : "+e.getMessage());
+			throw e;
+		}finally {
+			in.close();
 		}
 	}
 }
